@@ -21,7 +21,7 @@ services:
       - prokitchen
 
   wordpress:
-    image: wordpress:6.5-php8.2-apache
+    image: wordpress:latest
     container_name: prokitchen_wp
     depends_on:
       db:
