@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: prokitchen_db
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-prokitchen_root_2024}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-prokitchen_db}
+      MYSQL_USER: ${MYSQL_USER:-prokitchen_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-prokitchen_pass_2024}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=${MYSQL_ROOT_PASSWORD:-prokitchen_root_2024}"]
+      timeout: 20s
+      interval: 5s
+      retries: 15
+    networks:
+      - prokitchen
+
+  wordpress:
+    image: wordpress:6.5-php8.2-apache
+    container_name: prokitchen_wp
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER:-prokitchen_user}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-prokitchen_pass_2024}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-prokitchen_db}
+      WORDPRESS_TABLE_PREFIX: pk_
+      WORDPRESS_DEBUG: ${WP_DEBUG:-0}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_MEMORY_LIMIT', '256M');
+        define('WP_MAX_MEMORY_LIMIT', '512M');
+    networks:
+      - prokitchen
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: prokitchen_pma
+    depends_on:
+      - db
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-prokitchen_root_2024}
+    networks:
+      - prokitchen
+
+volumes:
+  db_data:
+
+networks:
+  prokitchen:
+    driver: bridge

@@ -1,0 +1,38 @@
+# WordPress Core (not tracked — lives in Docker container)
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/languages/
+wp-content/themes/twenty*/
+wp-content/plugins/akismet/
+wp-content/plugins/hello.php
+
+# Environment
+.env
+
+# Logs
+*.log
+error_log
+
+# OS
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node (if using build tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build artifacts
+dist/
+build/
+
+# Temp
+*.tmp
+*.bak

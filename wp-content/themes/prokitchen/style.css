@@ -1,0 +1,18 @@
+/*
+Theme Name:        ProKitchen Equipment
+Theme URI:         https://github.com/MavericK1001/ProKitchen-Equipment
+Author:            ProKitchen Equipment
+Description:       Custom B2B WooCommerce theme for commercial kitchen equipment. Dark industrial aesthetic with black/gold styling, custom product specs, quote request system, and financing integration. Built for real stores that take real orders.
+Version:           1.0.0
+Requires at least: 6.0
+Tested up to:      6.5
+Requires PHP:      8.0
+License:           GPL v2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:       prokitchen
+WC requires at least: 8.0
+WC tested up to:   8.9
+Tags:              e-commerce, woocommerce, dark, industrial, b2b, restaurant-equipment, custom
+*/
+
+/* Theme base styles are loaded via assets/css/main.css */
